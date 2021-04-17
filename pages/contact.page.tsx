@@ -51,6 +51,7 @@ function contactPage({ page }: pageProps) {
           });
         })
         .catch((err) => {
+          console.log(err);
           toast({
             title: `Error occured on the server. Please submit this issue if necessary`,
             status: "success",

@@ -33,7 +33,7 @@ function contactPage({ page }: pageProps) {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       setSubmit(true);
-      axios({
+      await axios({
         method: "POST",
         data: {
           message: formik.values.message,
@@ -55,7 +55,7 @@ function contactPage({ page }: pageProps) {
           console.log(err);
           toast({
             title: `Error occured on the server. Please submit this issue if necessary`,
-            status: "success",
+            status: "error",
             isClosable: true
           });
         });

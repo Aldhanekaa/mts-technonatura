@@ -1,8 +1,10 @@
 import "tailwindcss/tailwind.css";
 import "../styles/globals.css";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
 import NavFoot from "../components/NavFoot";
 import { ThemeProvider, useTheme } from "@material-ui/core/styles";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 
 /* Important Scripts */
 import { DefaultSeo } from "next-seo";
@@ -19,6 +21,8 @@ import SEO from "../seo.config";
 
 /* Components */
 import ProgressLoad from "../components/ProgressLoad";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 /* Components */
 declare global {
   interface Window {
@@ -90,18 +94,20 @@ function MyApp({ Component, pageProps }: AppProps) {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css"
         />
-      </Head>
-
+      </Head>{" "}
+      <DefaultSeo {...SEO} />
+      {/* <div<> */}
+      {/* <ChakraProvider> */}
       <ThemeProvider theme={theme}>
-        <DefaultSeo {...SEO} />
-
+        <CssBaseline />
         <ProgressLoad />
         {/* {<Navbar /> && Nav} */}
+        <Navbar page={router.route} />
         <ChakraProvider>
-          <NavFoot page={router.route}>
-            <Component page={router.route} {...Component} {...pageProps} />
-          </NavFoot>
+          <CSSReset />
+          <Component {...pageProps} />
         </ChakraProvider>
+        <Footer />
       </ThemeProvider>
     </>
   );

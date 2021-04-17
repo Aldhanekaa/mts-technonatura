@@ -1,12 +1,11 @@
-import { Button, Text, Stack, Input } from "@chakra-ui/react";
-import TextField from "@material-ui/core/TextField";
+import { Button, Text, Stack, Input, useToast } from "@chakra-ui/react";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 
 const validationSchema = yup.object({
-  name: yup.string().trim().required("name is required"),
+  name: yup.string().trim().min(4, "Too Short").required("name is required"),
   email: yup
     .string()
     .email("Enter a valid email")
@@ -22,6 +21,9 @@ import { NextSeo } from "next-seo";
 import { pageProps } from "../ts/interfaces";
 
 function contactPage({ page }: pageProps) {
+  const toast = useToast();
+
+  const [submitting, setSubmit] = useState<boolean>(false);
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -30,7 +32,7 @@ function contactPage({ page }: pageProps) {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log(process.env.contactURL)
+      setSubmit(true);
       axios({
         method: "POST",
         data: {
@@ -38,15 +40,25 @@ function contactPage({ page }: pageProps) {
           email: formik.values.email,
           name: formik.values.name
         },
-        url: process.env.contactURL || 'http://localhost:3030/contact',
+        url: process.env.contactURL || "http://localhost:3030/contact",
+        withCredentials: true
       })
         .then((res) => {
-          console.log(res);
+          toast({
+            title: `Successfully Submit`,
+            status: "success",
+            isClosable: true
+          });
         })
         .catch((err) => {
-          console.error(err);
+          toast({
+            title: `Error occured on the server. Please submit this issue if necessary`,
+            status: "success",
+            isClosable: true
+          });
         });
       // console.log("response", response);
+      setSubmit(false);
     }
   });
   return (
@@ -174,7 +186,12 @@ function contactPage({ page }: pageProps) {
                 {formik.errors.message}
               </Text>
             </div>
-            <Button type="submit" colorScheme="teal" variant="solid">
+            <Button
+              isLoading={submitting}
+              type="submit"
+              colorScheme="teal"
+              variant="solid"
+            >
               Send
             </Button>
 

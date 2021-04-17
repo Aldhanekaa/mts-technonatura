@@ -21,7 +21,11 @@ const dualENV = {
 
 const getDate = new Date();
 
-const env = { ...dualENV[NODE_ENV], isProduction: NODE_ENV === "production" };
+const env = {
+  ...dualENV[NODE_ENV],
+  isProduction: NODE_ENV === "production",
+  contactURL: process.env.contactURL
+};
 
 // next.js configuration
 const nextConfig = {
@@ -100,13 +104,13 @@ module.exports = withPlugins(
     [
       withPWA,
       {
-      pwa: {
-        disable: process.env.NODE_ENV === "development",
-        register: true,
-        sw: "service-worker.js",
-        dest: "public"
+        pwa: {
+          disable: process.env.NODE_ENV === "development",
+          register: true,
+          sw: "service-worker.js",
+          dest: "public"
+        }
       }
-    }
     ],
     [
       withCss,

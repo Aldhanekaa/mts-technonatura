@@ -40,6 +40,7 @@ function contactPage({ page }: pageProps) {
           email: formik.values.email,
           name: formik.values.name
         },
+
         url: process.env.contactURL || "http://localhost:3030/contact",
         withCredentials: true
       })

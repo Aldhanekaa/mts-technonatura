@@ -4,7 +4,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 import NavFoot from "../components/NavFoot";
 import { ThemeProvider, useTheme } from "@material-ui/core/styles";
-import { ChakraProvider, CSSReset } from "@chakra-ui/react";
+import { CSSReset, theme } from "@chakra-ui/react";
+import * as Chakra from "@chakra-ui/react";
 
 /* Important Scripts */
 import { DefaultSeo } from "next-seo";
@@ -53,7 +54,7 @@ const doesntAlllowedNavAndFooter: string[] = [
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const theme = useTheme();
+  const materialUITheme = useTheme();
 
   let path: string = router.pathname;
 
@@ -98,16 +99,16 @@ function MyApp({ Component, pageProps }: AppProps) {
       <DefaultSeo {...SEO} />
       {/* <div<> */}
       {/* <ChakraProvider> */}
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={materialUITheme}>
         <CssBaseline />
         <ProgressLoad />
         {/* {<Navbar /> && Nav} */}
-        <Navbar page={router.route} />
-        <ChakraProvider>
-          <CSSReset />
-          <Component {...pageProps} />
-        </ChakraProvider>
-        <Footer />
+        <NavFoot page={router.route}>
+          <Chakra.ThemeProvider theme={theme}>
+            <CSSReset />
+            <Component {...pageProps} />
+          </Chakra.ThemeProvider>
+        </NavFoot>
       </ThemeProvider>
     </>
   );

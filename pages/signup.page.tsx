@@ -222,9 +222,9 @@ export default function signup() {
                           onClick={handleClickShowPassword}
                         >
                           {values.showPassword ? (
-                            <Visibility />
+                            <Visibility style={{ marginTop: "-5px" }} />
                           ) : (
-                            <VisibilityOff />
+                            <VisibilityOff style={{ marginTop: "-5px" }} />
                           )}
                         </Button>
                       </InputRightElement>

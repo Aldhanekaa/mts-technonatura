@@ -1,8 +1,11 @@
 import "tailwindcss/tailwind.css";
 import "../styles/globals.css";
 import CssBaseline from "@material-ui/core/CssBaseline";
-
+import Box from "@material-ui/core/Box";
+import Fab from "@material-ui/core/Fab";
+import ShareIcon from "@material-ui/icons/Share";
 import NavFoot from "../components/NavFoot";
+import Stack from "@material-ui/core/Stack";
 import { ThemeProvider, useTheme } from "@material-ui/core/styles";
 import { CSSReset, theme } from "@chakra-ui/react";
 import * as Chakra from "@chakra-ui/react";
@@ -107,6 +110,25 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Chakra.ThemeProvider theme={theme}>
             <CSSReset />
             <Component {...pageProps} />
+            <Stack
+              spacing={2}
+              style={{
+                position: "fixed",
+                bottom: "20px",
+                right: "20px"
+              }}
+            >
+              <Fab
+                style={{ borderRadius: "50px" }}
+                className="btn"
+                variant="extended"
+                color="primary"
+                aria-label="add"
+              >
+                <ShareIcon sx={{ mr: 1 }} />
+                Share Website
+              </Fab>
+            </Stack>
           </Chakra.ThemeProvider>
         </NavFoot>
       </ThemeProvider>
